@@ -2,4 +2,18 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="mint_bg">#E0FCEA</color>
+    <color name="ink">#1C1C1C</color>
+    <color name="gray_text">#757575</color>
+    <color name="dark_green">#1F5233</color>
+    <color name="nav_green">#9AD6A6</color>
+    <color name="step_circle">#E0FCEA</color>
+    <color name="card_featured">#FCF8FF</color>
+    <color name="card_stroke">#C9C5CE</color>
+    <color name="button_dark">#2E2E2E</color>
+    <color name="badge_good_bg">#CDEFD3</color>
+    <color name="badge_good_text">#1B5E20</color>
+    <color name="badge_used_bg">#FFE8A8</color>
+    <color name="badge_used_text">#7A5B00</color>
 </resources>

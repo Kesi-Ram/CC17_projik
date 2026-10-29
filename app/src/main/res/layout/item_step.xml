@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="12dp">
+
+    <TextView
+        android:id="@+id/tvNumber"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_step_circle"
+        android:gravity="center"
+        android:textColor="@color/ink"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="1" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvStepTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/ink"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            tools:text="Browse &amp; Find an Item" />
+
+        <TextView
+            android:id="@+id/tvStepDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:lineSpacingMultiplier="1.2"
+            android:textColor="@color/gray_text"
+            android:textSize="15sp"
+            tools:text="Scroll through the marketplace on the Home screen." />
+    </LinearLayout>
+</LinearLayout>
