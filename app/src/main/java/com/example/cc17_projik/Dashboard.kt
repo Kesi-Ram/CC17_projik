@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.cc17_projik.databinding.ActivityDashboardBinding
 import com.example.cc17_projik.databinding.ItemStepBinding
+import androidx.activity.addCallback
 
 class Dashboard : AppCompatActivity() {
 
@@ -55,7 +56,26 @@ class Dashboard : AppCompatActivity() {
         setupBottomNav()
 
         binding.btnViewMore.setOnClickListener { toast("View more: open the Market screen here") }
-        binding.btnMenu.setOnClickListener { toast("Menu: open your drawer here") }
+
+        // Open drawer when menu button is tapped
+        binding.btnMenu.setOnClickListener {
+            binding.drawerLayout.openDrawer(androidx.core.view.GravityCompat.START)
+        }
+
+        // Log out closes the drawer (add real logic later)
+        binding.drawerLogout.setOnClickListener {
+            binding.drawerLayout.closeDrawers()
+        }
+
+        // Back button closes drawer if it's open
+        onBackPressedDispatcher.addCallback(this) {
+            if (binding.drawerLayout.isDrawerOpen(androidx.core.view.GravityCompat.START)) {
+                binding.drawerLayout.closeDrawers()
+            } else {
+                isEnabled = false
+                onBackPressedDispatcher.onBackPressed()
+            }
+        }
     }
 
     private fun setupFeatured(item: Listing) = with(binding) {
