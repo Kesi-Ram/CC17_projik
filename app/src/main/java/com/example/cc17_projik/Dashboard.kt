@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.cc17_projik.databinding.ActivityDashboardBinding
 import com.example.cc17_projik.databinding.ItemStepBinding
 import androidx.activity.addCallback
+import android.content.Intent
 
 class Dashboard : AppCompatActivity() {
 
@@ -55,7 +56,9 @@ class Dashboard : AppCompatActivity() {
         setupGuide()
         setupBottomNav()
 
-        binding.btnViewMore.setOnClickListener { toast("View more: open the Market screen here") }
+        binding.btnViewMore.setOnClickListener {
+            startActivity(Intent(this, MarketActivity::class.java))
+        }
 
         // Open drawer when menu button is tapped
         binding.btnMenu.setOnClickListener {
@@ -128,7 +131,9 @@ class Dashboard : AppCompatActivity() {
         }
 
         binding.navHome.setOnClickListener { select(0) }
-        binding.navMarket.setOnClickListener { select(1); toast("Market screen goes here") }
+        binding.navMarket.setOnClickListener {
+            startActivity(Intent(this, MarketActivity::class.java))
+        }
         binding.navSell.setOnClickListener { select(2); toast("Sell screen goes here") }
         binding.navTrade.setOnClickListener { select(3); toast("Trade screen goes here") }
 

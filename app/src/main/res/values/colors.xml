@@ -16,4 +16,7 @@
     <color name="badge_good_text">#1B5E20</color>
     <color name="badge_used_bg">#FFE8A8</color>
     <color name="badge_used_text">#7A5B00</color>
+    <color name="search_bg">#E6E0E9</color>
+    <color name="chip_selected">#E8DEF8</color>
+    <color name="badge_red">#B3261E</color>
 </resources>
