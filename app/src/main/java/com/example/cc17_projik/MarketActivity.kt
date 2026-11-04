@@ -226,7 +226,7 @@ class MarketActivity : AppCompatActivity() {
 
         // Return to the previous screen.
         binding.navHome.setOnClickListener {
-            finish()
+            startActivity(Intent(this, Dashboard::class.java))
         }
 
         // Market is already the current screen.
@@ -236,7 +236,7 @@ class MarketActivity : AppCompatActivity() {
 
         // Placeholder for Sell screen navigation.
         binding.navSell.setOnClickListener {
-            toast("Sell screen goes here")
+            startActivity(Intent(this, SellActivity::class.java))
         }
 
         // Placeholder for Trade screen navigation.
