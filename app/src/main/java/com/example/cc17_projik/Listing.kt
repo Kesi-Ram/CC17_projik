@@ -41,3 +41,14 @@ fun TextView.bindCondition(condition: Condition) {
     setBackgroundResource(condition.bgRes)
     setTextColor(ContextCompat.getColor(context, condition.textColorRes))
 }
+
+// Shared list of all listings. Every screen reads from and adds to this one list.
+val allListings = mutableListOf(
+    Listing(1, "Macbook Pro", 430, Condition.GOOD, Category.LAPTOPS, R.drawable.ic_home),
+    Listing(2, "Iphone 13 Pro Max", 320, Condition.USED, Category.PHONES, R.drawable.ic_home),
+    Listing(3, "Iphone 11 64gb", 150, Condition.GOOD, Category.PHONES, R.drawable.ic_home),
+    Listing(4, "Samsung Fold 8", 500, Condition.NEW, Category.PHONES, R.drawable.ic_home),
+    Listing(5, "Iphone duo 512gb", 1000, Condition.NEW, Category.PHONES, R.drawable.ic_home),
+    Listing(6, "JBL speaker", 200, Condition.USED, Category.AUDIO, R.drawable.ic_home),
+    Listing(7, "Washing Machine", 70, Condition.USED, Category.OTHERS, R.drawable.ic_home)
+)
