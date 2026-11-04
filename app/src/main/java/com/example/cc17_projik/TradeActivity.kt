@@ -1,29 +1,42 @@
 package com.example.cc17_projik
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cc17_projik.databinding.ActivityTradeBinding
 
 class TradeActivity : AppCompatActivity() {
 
-    private val TradeAdapter = TradeAdapter { TradeItem -> Tradelist(TradeItem) }
-
+    private lateinit var binding: ActivityTradeBinding
+    private lateinit var tradeAdapter: TradeAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_trade)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-    }
-    private fun Tradelist(tradeItem: TradeItem) {
-        // TODO: open your item detail screen with listing.id
+
+        binding = ActivityTradeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setupTradeRecyclerView()
     }
 
+    private fun setupTradeRecyclerView() {
+
+        tradeAdapter = TradeAdapter { item ->
+
+            Toast.makeText(
+                this,
+                "Selected: ${item.name}",
+                Toast.LENGTH_SHORT
+            ).show()
+
+        }
+
+        binding.rvTradeItems.apply {
+            layoutManager = LinearLayoutManager(this@TradeActivity)
+            adapter = tradeAdapter
+        }
+
+        tradeAdapter.submitList(myTradeItems)
+    }
 }
