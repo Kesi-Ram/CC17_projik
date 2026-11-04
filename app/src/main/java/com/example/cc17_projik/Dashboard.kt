@@ -65,9 +65,22 @@ class Dashboard : AppCompatActivity() {
             binding.drawerLayout.openDrawer(androidx.core.view.GravityCompat.START)
         }
 
-        // Log out closes the drawer (add real logic later)
+        // Log out closes the drawer
         binding.drawerLogout.setOnClickListener {
+
+            // Close the navigation drawer
             binding.drawerLayout.closeDrawers()
+
+            // Go back to LoginActivity
+            val intent = Intent(this, MainActivity::class.java)
+
+            // Clear dashboard from the back stack
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+            startActivity(intent)
+
+            finish()
         }
 
         // Back button closes drawer if it's open

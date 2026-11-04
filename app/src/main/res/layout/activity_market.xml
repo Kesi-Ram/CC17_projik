@@ -157,6 +157,8 @@
         </HorizontalScrollView>
 
         <!-- Product grid -->
+
+        <!-- Bottom nav (Market is the active tab) -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMarket"
             android:layout_width="0dp"
@@ -168,13 +170,14 @@
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/chipScroll"
+            app:layout_constraintVertical_bias="1.0"
             app:spanCount="2"
             tools:itemCount="6"
             tools:listitem="@layout/item_listing" />
 
-        <!-- Bottom nav (Market is the active tab) -->
         <LinearLayout
             android:id="@+id/bottomNav"
             android:layout_width="0dp"
@@ -446,7 +449,8 @@
             android:layout_height="48dp"
             android:layout_marginTop="16dp"
             android:clickable="true"
-            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawableEnd="@drawable/ic_privacy"
+            android:drawablePadding="14dp"
             android:focusable="true"
             android:gravity="center_vertical"
             android:text="Privacy&amp;Security"
@@ -458,7 +462,8 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:clickable="true"
-            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawableEnd="@drawable/ic_faq"
+            android:drawablePadding="14dp"
             android:focusable="true"
             android:gravity="center_vertical"
             android:text="FAQ"
@@ -470,7 +475,8 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:clickable="true"
-            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawableEnd="@drawable/ic_info"
+            android:drawablePadding="14dp"
             android:focusable="true"
             android:gravity="center_vertical"
             android:text="About us"
@@ -482,7 +488,8 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:clickable="true"
-            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawableEnd="@drawable/ic_settings"
+            android:drawablePadding="14dp"
             android:focusable="true"
             android:gravity="center_vertical"
             android:text="Settings"
@@ -494,7 +501,8 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:clickable="true"
-            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawableEnd="@drawable/ic_logout"
+            android:drawablePadding="14dp"
             android:focusable="true"
             android:gravity="center_vertical"
             android:text="Log out"

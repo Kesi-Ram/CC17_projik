@@ -29,7 +29,19 @@ class MarketActivity : AppCompatActivity() {
 
         binding.btnMenu.setOnClickListener { toast("Menu: open the drawer here") }
         binding.btnBell.setOnClickListener { toast("Notifications") }
+
+        // Open drawer when menu button is tapped
+        binding.btnMenu.setOnClickListener {
+            binding.drawerLayout.openDrawer(androidx.core.view.GravityCompat.START)
+        }
+
+        // Log out closes the drawer (add real logic later)
+        binding.drawerLogout.setOnClickListener {
+            binding.drawerLayout.closeDrawers()
+        }
     }
+
+
 
     private fun setupChips() {
         binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
