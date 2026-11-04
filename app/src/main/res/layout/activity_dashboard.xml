@@ -331,7 +331,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Home"
-                    android:textColor="@color/white"
+                    android:textColor="@color/ink"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -358,7 +358,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Market"
-                    android:textColor="@color/white"
+                    android:textColor="@color/ink"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -385,7 +385,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Sell"
-                    android:textColor="@color/white"
+                    android:textColor="@color/ink"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -412,7 +412,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Trade"
-                    android:textColor="@color/white"
+                    android:textColor="@color/ink"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>

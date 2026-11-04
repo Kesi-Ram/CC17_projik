@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.cc17_projik.databinding.ActivityDashboardBinding
 import com.example.cc17_projik.databinding.ItemStepBinding
 import androidx.activity.addCallback
+import android.content.Intent
 
 class Dashboard : AppCompatActivity() {
 
@@ -17,9 +18,9 @@ class Dashboard : AppCompatActivity() {
 
     // TODO: swap ic_home for your real photos, e.g. R.drawable.macbook_pro
     private val listings = listOf(
-        Listing(1, "Macbook Pro", 430, Condition.GOOD, R.drawable.ic_home),
-        Listing(2, "Iphone 13 Pro Max", 320, Condition.USED, R.drawable.ic_home),
-        Listing(3, "Iphone 11 64gb", 150, Condition.GOOD, R.drawable.ic_home)
+        Listing(1, "Macbook Pro", 430, Condition.GOOD, Category.LAPTOPS,R.drawable.ic_home),
+        Listing(2, "Iphone 13 Pro Max", 320, Condition.USED, Category.PHONES,R.drawable.ic_home),
+        Listing(3, "Iphone 11 64gb", 150, Condition.GOOD, Category.PHONES,R.drawable.ic_home)
     )
 
     private val tradingSteps = listOf(
@@ -55,16 +56,31 @@ class Dashboard : AppCompatActivity() {
         setupGuide()
         setupBottomNav()
 
-        binding.btnViewMore.setOnClickListener { toast("View more: open the Market screen here") }
+        binding.btnViewMore.setOnClickListener {
+            startActivity(Intent(this, MarketActivity::class.java))
+        }
 
         // Open drawer when menu button is tapped
         binding.btnMenu.setOnClickListener {
             binding.drawerLayout.openDrawer(androidx.core.view.GravityCompat.START)
         }
 
-        // Log out closes the drawer (add real logic later)
+        // Log out closes the drawer
         binding.drawerLogout.setOnClickListener {
+
+            // Close the navigation drawer
             binding.drawerLayout.closeDrawers()
+
+            // Go back to LoginActivity
+            val intent = Intent(this, MainActivity::class.java)
+
+            // Clear dashboard from the back stack
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+            startActivity(intent)
+
+            finish()
         }
 
         // Back button closes drawer if it's open
@@ -128,7 +144,9 @@ class Dashboard : AppCompatActivity() {
         }
 
         binding.navHome.setOnClickListener { select(0) }
-        binding.navMarket.setOnClickListener { select(1); toast("Market screen goes here") }
+        binding.navMarket.setOnClickListener {
+            startActivity(Intent(this, MarketActivity::class.java))
+        }
         binding.navSell.setOnClickListener { select(2); toast("Sell screen goes here") }
         binding.navTrade.setOnClickListener { select(3); toast("Trade screen goes here") }
 
