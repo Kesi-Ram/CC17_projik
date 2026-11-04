@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cc17_projik.databinding.ActivityMarketBinding
 import com.google.android.material.chip.Chip
 
@@ -13,6 +14,18 @@ class MarketActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMarketBinding
 
+    private val listingAdapter = ListingAdapter { listing -> openMarketListing(listing)
+    }
+    private val marketListings = listOf(
+        Listing(1, "Macbook Pro", 430, Condition.GOOD, R.drawable.ic_home),
+        Listing(2, "Iphone 13 Pro Max", 320, Condition.USED, R.drawable.ic_home),
+        Listing(3, "Iphone 11 64gb", 150, Condition.GOOD, R.drawable.ic_home),
+                Listing(2, "Iphone 13 Pro Max", 320, Condition.USED, R.drawable.ic_home),
+        Listing(2, "Samsung Fold 8", 500, Condition.NEW, R.drawable.ic_home),
+        Listing(2, "Iphone duo 512gb", 1000, Condition.NEW, R.drawable.ic_home),
+        Listing(2, "JBL speaker", 200, Condition.USED, R.drawable.ic_home),
+        Listing(2, "Washing Machine", 70, Condition.USED, R.drawable.ic_home),
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -39,6 +52,13 @@ class MarketActivity : AppCompatActivity() {
         binding.drawerLogout.setOnClickListener {
             binding.drawerLayout.closeDrawers()
         }
+
+        binding.rvMarket.apply {
+            layoutManager = GridLayoutManager(this@MarketActivity, 2)
+            adapter = listingAdapter
+        }
+
+        listingAdapter.submitList(marketListings)
     }
 
 
@@ -59,4 +79,12 @@ class MarketActivity : AppCompatActivity() {
 
     private fun toast(msg: String) =
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+
+    private fun openMarketListing(listing: Listing) {
+        Toast.makeText(
+            this,
+            "You selected ${listing.title} in Market",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
 }

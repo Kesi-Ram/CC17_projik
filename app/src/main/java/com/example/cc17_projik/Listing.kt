@@ -11,7 +11,9 @@ enum class Condition(
     @ColorRes val textColorRes: Int
 ) {
     GOOD("GOOD", R.drawable.bg_badge_good, R.color.badge_good_text),
-    USED("USED", R.drawable.bg_badge_used, R.color.badge_used_text)
+    USED("USED", R.drawable.bg_badge_used, R.color.badge_used_text),
+
+    NEW("NEW", R.drawable.bg_badge_new, R.color.badge_new_text)
 }
 
 data class Listing(
