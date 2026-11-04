@@ -147,7 +147,9 @@ class Dashboard : AppCompatActivity() {
         binding.navMarket.setOnClickListener {
             startActivity(Intent(this, MarketActivity::class.java))
         }
-        binding.navSell.setOnClickListener { select(2); toast("Sell screen goes here") }
+        binding.navSell.setOnClickListener {
+            startActivity(Intent(this, SellActivity::class.java))
+        }
         binding.navTrade.setOnClickListener { select(3); toast("Trade screen goes here") }
 
         select(0)
