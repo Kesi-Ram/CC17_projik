@@ -21,4 +21,8 @@
     <color name="search_bg">#E6E0E9</color>
     <color name="chip_selected">#E8DEF8</color>
     <color name="badge_red">#B3261E</color>
+    <color name="mint">#DCFCE7</color>
+    <color name="brand_green">#009B4D</color>
+    <color name="field_border">#D0D0D0</color>
+    <color name="photo_box">#D9D9D9</color>
 </resources>
