@@ -22,12 +22,12 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-
+        //log in inputs
             val emailInput = findViewById<EditText>(R.id.editTextTextEmailAddress)
             val passwordInput = findViewById<EditText>(R.id.editTextTextPassword)
             val loginButton = findViewById<Button>(R.id.button2)
 
+        //log in button
             loginButton.setOnClickListener {
                 val email = emailInput.text.toString()
                 val password = passwordInput.text.toString()

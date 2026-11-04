@@ -11,6 +11,7 @@ class ListingAdapter(
     private val onClick: (Listing) -> Unit
 ) : ListAdapter<Listing, ListingAdapter.ViewHolder>(Diff) {
 
+    // ViewHolder class
     class ViewHolder(val binding: ItemListingBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -18,6 +19,7 @@ class ListingAdapter(
         return ViewHolder(binding)
     }
 
+    // Bind data to the ViewHolder
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         with(holder.binding) {

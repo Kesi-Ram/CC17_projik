@@ -18,9 +18,9 @@ class Dashboard : AppCompatActivity() {
 
     // TODO: swap ic_home for your real photos, e.g. R.drawable.macbook_pro
     private val listings = listOf(
-        Listing(1, "Macbook Pro", 430, Condition.GOOD, R.drawable.ic_home),
-        Listing(2, "Iphone 13 Pro Max", 320, Condition.USED, R.drawable.ic_home),
-        Listing(3, "Iphone 11 64gb", 150, Condition.GOOD, R.drawable.ic_home)
+        Listing(1, "Macbook Pro", 430, Condition.GOOD, Category.LAPTOPS,R.drawable.ic_home),
+        Listing(2, "Iphone 13 Pro Max", 320, Condition.USED, Category.PHONES,R.drawable.ic_home),
+        Listing(3, "Iphone 11 64gb", 150, Condition.GOOD, Category.PHONES,R.drawable.ic_home)
     )
 
     private val tradingSteps = listOf(

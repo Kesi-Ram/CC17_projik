@@ -5,6 +5,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 
+//condition badges
 enum class Condition(
     val label: String,
     @DrawableRes val bgRes: Int,
@@ -16,11 +17,22 @@ enum class Condition(
     NEW("NEW", R.drawable.bg_badge_new, R.color.badge_new_text)
 }
 
+//category for filtering
+enum class Category(val label: String) {
+    OTHERS("Others"),
+    PHONES("Phones"),
+    PC_PARTS("PC parts"),
+    LAPTOPS("Laptops"),
+    AUDIO("Audio"),
+    ACCESSORIES("Accessories")
+}
+//listing data class
 data class Listing(
     val id: Int,
     val title: String,
     val price: Int,
     val condition: Condition,
+    val category: Category,
     @DrawableRes val imageRes: Int
 )
 
