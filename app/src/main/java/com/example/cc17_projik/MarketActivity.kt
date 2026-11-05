@@ -141,8 +141,12 @@ class MarketActivity : AppCompatActivity() {
         }
 
         binding.navTrade.setOnClickListener {
-            toast("Trade screen goes here")
+            startActivity(Intent(this, TradeActivity::class.java))
         }
+        binding.navTrade.setOnClickListener {
+            startActivity(Intent(this, TradeActivity::class.java))
+        }
+
     }
 
     // ---------------------------------------------------------

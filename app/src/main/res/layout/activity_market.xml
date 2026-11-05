@@ -172,8 +172,8 @@
         <!-- Bottom nav (Market is the active tab) -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMarket"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="409dp"
+            android:layout_height="753dp"
             android:layout_marginTop="12dp"
             android:clipToPadding="false"
             android:paddingHorizontal="10dp"
