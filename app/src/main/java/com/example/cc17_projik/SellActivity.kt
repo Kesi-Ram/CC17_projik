@@ -15,6 +15,11 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 
 
 class SellActivity : AppCompatActivity() {
@@ -86,7 +91,7 @@ class SellActivity : AppCompatActivity() {
 
         val newId = (allListings.maxOfOrNull { it.id } ?: 0) + 1
         allListings.add(
-            0, // index 0 = newest item shows first
+            0,
             Listing(
                 id = newId,
                 title = title,
@@ -96,7 +101,7 @@ class SellActivity : AppCompatActivity() {
                 imageRes = R.drawable.ic_home
             )
         )
-
+        notifyProductPosted(title)
         showPostedDialog()
     }
 
@@ -121,6 +126,11 @@ class SellActivity : AppCompatActivity() {
             .setCancelable(false)
             .setPositiveButton("OK") { dialog, _ ->
                 dialog.dismiss()
+
+                notifyProductPosted(
+                    findViewById<EditText>(R.id.etTitle).text.toString().trim()
+                )
+
                 finish() // back to the previous screen
             }
             .setNegativeButton("View Market") { dialog, _ ->
@@ -132,6 +142,50 @@ class SellActivity : AppCompatActivity() {
             }
             .show()
     }
+
+    private val notificationPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+
+            if (isGranted) {
+                NotificationHelper.showProductPostedNotification(
+                    this,
+                    pendingProductTitle
+                )
+            }
+        }
+    /**
+     * Checks notification permission before displaying
+     * the product posting notification.
+     */
+    private fun notifyProductPosted(productTitle: String) {
+
+        if (Build.VERSION.SDK_INT >= 33) {
+
+            if (
+                ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                pendingProductTitle = productTitle
+
+                notificationPermissionLauncher.launch(
+                    Manifest.permission.POST_NOTIFICATIONS
+                )
+
+                return
+            }
+        }
+
+        NotificationHelper.showProductPostedNotification(
+            this,
+            productTitle
+        )
+    }
+
+    private var pendingProductTitle = ""
 
     private fun toast(message: String) =
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

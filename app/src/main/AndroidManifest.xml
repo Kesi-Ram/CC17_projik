@@ -39,4 +39,6 @@
             android:windowSoftInputMode="adjustResize" />
     </application>
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
 </manifest>
