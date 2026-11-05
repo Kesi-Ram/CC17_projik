@@ -153,6 +153,9 @@ class Dashboard : AppCompatActivity() {
         binding.navTrade.setOnClickListener {
             startActivity(Intent(this, TradeActivity::class.java))
         }
+        binding.navTrade.setOnClickListener {
+            startActivity(Intent(this, TradeActivity::class.java))
+        }
 
         select(0)
     }
