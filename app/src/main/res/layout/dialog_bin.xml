@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingBottom="16dp">
+        <TextView
+            style="@style/FormLabel"
+            android:text="@string/bin_name" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/FormField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="500"
+                android:inputType="textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            style="@style/FormLabel"
+            android:text="@string/address" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/FormField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="500"
+                android:inputType="textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            style="@style/FormLabel"
+            android:text="@string/maps_link" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/FormField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMapsLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="500"
+                android:inputType="textUri" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            style="@style/FormLabel"
+            android:text="@string/bin_notes" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/FormField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="2000"
+                android:inputType="textMultiLine|textCapSentences"
+                android:minLines="3"
+                android:gravity="top" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+</ScrollView>
