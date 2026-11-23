@@ -10,13 +10,11 @@
     app:cardCornerRadius="12dp"
     app:cardElevation="0dp"
     app:strokeWidth="0dp">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="12dp">
-
         <ImageView
             android:id="@+id/imgListing"
             android:layout_width="match_parent"
@@ -24,20 +22,22 @@
             android:contentDescription="@string/app_name"
             android:scaleType="fitCenter"
             tools:src="@drawable/ic_book" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp">
-
             <TextView
                 android:id="@+id/tvPrice"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="22sp"
-                tools:text="$320" />
-
+                tools:text="$320"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/tvCondition"
+                android:layout_marginEnd="8dp"
+                android:maxLines="1"
+                android:ellipsize="end" />
             <TextView
                 android:id="@+id/tvCondition"
                 android:layout_width="wrap_content"
@@ -46,11 +46,13 @@
                 android:layout_alignBaseline="@id/tvPrice"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="2dp"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 tools:background="@drawable/bg_badge_used"
-                tools:text="USED" />
+                tools:text="USED"
+                android:maxWidth="120dp"
+                android:maxLines="1"
+                android:ellipsize="end" />
         </RelativeLayout>
-
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
