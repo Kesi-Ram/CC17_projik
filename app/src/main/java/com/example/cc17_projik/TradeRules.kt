@@ -28,9 +28,10 @@ data class BinLocation(
     val mapsUrl: String = "",
     val notes: String = ""
 ) {
-    fun googleMapsUrl(): String = mapsUrl.takeIf { it.isNotBlank() }
-        ?: "https://www.google.com/maps/search/?api=1&query=" +
-            URLEncoder.encode("$name, $address", "UTF-8")
+    fun googleMapsUrl(): String =
+        mapsUrl.takeIf { it.isNotBlank() }
+            ?: ("https://www.google.com/maps/search/?api=1&query=" +
+                    URLEncoder.encode("$name, $address", "UTF-8"))
 }
 
 data class MarketplaceData(
