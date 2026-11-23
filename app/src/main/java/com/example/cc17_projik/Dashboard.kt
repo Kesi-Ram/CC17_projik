@@ -1,7 +1,6 @@
 package com.example.cc17_projik
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -16,28 +15,22 @@ class Dashboard : AppCompatActivity() {
     private lateinit var binding: ActivityDashboardBinding
     private val listingAdapter = ListingAdapter { listing -> openListing(listing) }
 
-    // TODO: swap ic_home for your real photos, e.g. R.drawable.macbook_pro
-    private val listings = listOf(
-        Listing(1, "Macbook Pro", 430, Condition.GOOD, Category.LAPTOPS,R.drawable.ic_home),
-        Listing(2, "Iphone 13 Pro Max", 320, Condition.USED, Category.PHONES,R.drawable.ic_home),
-        Listing(3, "Iphone 11 64gb", 150, Condition.GOOD, Category.PHONES,R.drawable.ic_home)
-    )
+    private val store by lazy { LocalStore.get(this) }
 
     private val tradingSteps = listOf(
-        "Browse & Find an Item" to "Scroll through the marketplace on the Home screen. Use category filters or search to find an item you want.",
-        "Open Item Details" to "Tap on any listing card to view the full item details — price, condition, description, and seller info.",
-        "Tap \"Propose a Trade\"" to "On the item detail page, tap the purple \"Propose a Trade\" button at the bottom of the screen.",
-        "Fill in Your Item Details" to "Enter your item's title, description, and condition. This is the item you are offering in exchange.",
-        "Take or Upload a Photo" to "Tap the photo area to take a picture of your item or upload one from your gallery. A clear photo helps your proposal get accepted.",
-        "Publish Your Proposal" to "Once all fields are filled, tap \"Publish Trade Proposal\". Your offer is sent directly to the seller, who will be notified and can accept or decline."
+        R.string.guide_trade_step_1_title to R.string.guide_trade_step_1_description,
+        R.string.guide_trade_step_2_title to R.string.guide_trade_step_2_description,
+        R.string.guide_trade_step_3_title to R.string.guide_trade_step_3_description,
+        R.string.guide_trade_step_4_title to R.string.guide_trade_step_4_description,
+        R.string.guide_trade_step_5_title to R.string.guide_trade_step_5_description,
+        R.string.guide_trade_step_6_title to R.string.guide_trade_step_6_description
     )
 
-    // Placeholder text: replace with your team's real selling steps.
     private val sellingSteps = listOf(
-        "Tap Sell" to "Open the Sell tab from the bottom navigation bar.",
-        "Add Item Details" to "Enter a title, description, price, and condition for your gadget.",
-        "Add Photos" to "Take or upload clear photos so buyers can see what they are getting.",
-        "Publish Your Listing" to "Tap Publish and your item goes live on the marketplace."
+        R.string.guide_sell_step_1_title to R.string.guide_sell_step_1_description,
+        R.string.guide_sell_step_2_title to R.string.guide_sell_step_2_description,
+        R.string.guide_sell_step_3_title to R.string.guide_sell_step_3_description,
+        R.string.guide_sell_step_4_title to R.string.guide_sell_step_4_description
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,8 +44,6 @@ class Dashboard : AppCompatActivity() {
             insets
         }
 
-        setupFeatured(listings.first())
-        setupGrid(listings.drop(1))
         setupGuide()
         setupBottomNav()
 
@@ -95,8 +86,8 @@ class Dashboard : AppCompatActivity() {
     }
 
     private fun setupFeatured(item: Listing) = with(binding) {
-        imgFeatured.setImageResource(item.imageRes)
-        tvFeaturedPrice.text = "$${item.price}"
+        imgFeatured.showItemPhoto(item.imageUri, item.imageRes)
+        tvFeaturedPrice.text = getString(R.string.price_value, item.price)
         tvFeaturedTitle.text = item.title
         tvFeaturedCondition.bindCondition(item.condition)
         featuredCard.setOnClickListener { openListing(item) }
@@ -116,55 +107,28 @@ class Dashboard : AppCompatActivity() {
         }
     }
 
-    private fun showSteps(steps: List<Pair<String, String>>) {
+    private fun showSteps(steps: List<Pair<Int, Int>>) {
         val container = binding.stepsContainer
         container.removeAllViews()
         steps.forEachIndexed { index, (title, desc) ->
             val row = ItemStepBinding.inflate(layoutInflater, container, false)
-            row.tvNumber.text = (index + 1).toString()
-            row.tvStepTitle.text = title
-            row.tvStepDesc.text = desc
+            row.tvNumber.text = getString(R.string.step_number, index + 1)
+            row.tvStepTitle.setText(title)
+            row.tvStepDesc.setText(desc)
             container.addView(row.root)
         }
     }
 
-    private fun setupBottomNav() {
-        val icons = listOf(
-            binding.navHomeIcon,
-            binding.navMarketIcon,
-            binding.navSellIcon,
-            binding.navTradeIcon
-        )
-
-        fun select(index: Int) {
-            icons.forEachIndexed { i, icon ->
-                if (i == index) icon.setBackgroundResource(R.drawable.bg_nav_active)
-                else icon.background = null
-            }
-        }
-
-        binding.navHome.setOnClickListener { select(0) }
-        binding.navMarket.setOnClickListener {
-            startActivity(Intent(this, MarketActivity::class.java))
-        }
-        binding.navSell.setOnClickListener {
-            startActivity(Intent(this, SellActivity::class.java))
-        }
-        binding.navTrade.setOnClickListener {
-            startActivity(Intent(this, TradeActivity::class.java))
-        }
-        binding.navTrade.setOnClickListener {
-            startActivity(Intent(this, TradeActivity::class.java))
-        }
-
-        select(0)
+    override fun onResume() {
+        super.onResume()
+        val items = store.data.listings.filter { it.available }
+        binding.featuredCard.visibility = if (items.isEmpty()) android.view.View.GONE else android.view.View.VISIBLE
+        items.firstOrNull()?.let { setupFeatured(it) }
+        setupGrid(items.drop(1).take(4))
+        binding.drawerName.text = store.profileName
     }
 
-    private fun openListing(listing: Listing) {
-        // TODO: open your item detail screen with listing.id
-        toast("Open details for ${listing.title}")
-    }
+    private fun setupBottomNav() = setupBottomNav(binding.bottomNav)
 
-    private fun toast(message: String) =
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    private fun openListing(listing: Listing) = openProduct(listing.id)
 }

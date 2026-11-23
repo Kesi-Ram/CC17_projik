@@ -29,16 +29,18 @@ class MainActivity : AppCompatActivity() {
 
         //log in button
             loginButton.setOnClickListener {
-                val email = emailInput.text.toString()
+                val email = emailInput.text.toString().trim()
                 val password = passwordInput.text.toString()
 
                 // Perform login validation here
                 if (email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(this, "Please enter both email and password", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, Dashboard::class.java)
-                    startActivity(intent)
+                    runCatching { LocalStore.get(this).selectProfile(email) }
+                        .onSuccess {
+                            startActivity(Intent(this, Dashboard::class.java))
+                            finish()
+                        }.onFailure { showError(it) }
                 }
             }
         }

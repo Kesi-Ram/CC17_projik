@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cc17_projik.databinding.ActivityMarketBinding
@@ -46,6 +47,7 @@ class MarketActivity : AppCompatActivity() {
 
         setupRecyclerView()
         setupFilters()
+        binding.etSearch.doAfterTextChanged { refreshListings() }
         setupBottomNav()
 
         // Open the navigation drawer.
@@ -55,7 +57,7 @@ class MarketActivity : AppCompatActivity() {
 
         // Display notification message.
         binding.btnBell.setOnClickListener {
-            toast("Notifications")
+            Toast.makeText(this, R.string.ui_notifications, Toast.LENGTH_SHORT).show()
         }
 
         // Log out
@@ -113,7 +115,11 @@ class MarketActivity : AppCompatActivity() {
     // Reads the latest listings from the repository, applies the
     // selected category filter (if any), and updates the RecyclerView.
     private fun refreshListings() {
-        val all = allListings.toList()
+        val query = binding.etSearch.text.toString().trim()
+        val all = LocalStore.get(this).data.listings.filter {
+            it.available && (query.isEmpty() || it.title.contains(query, ignoreCase = true) ||
+                it.description.contains(query, ignoreCase = true))
+        }
         val shown = selectedCategory?.let { category ->
             all.filter { it.category == category }
         } ?: all
@@ -125,39 +131,8 @@ class MarketActivity : AppCompatActivity() {
     // BOTTOM NAVIGATION
     // ---------------------------------------------------------
 
-    private fun setupBottomNav() {
+    private fun setupBottomNav() = setupBottomNav(binding.bottomNav)
 
-        binding.navHome.setOnClickListener {
-            startActivity(Intent(this, Dashboard::class.java))
-        }
+    private fun openMarketListing(listing: Listing) = openProduct(listing.id)
 
-        // Market is already the current screen.
-        binding.navMarket.setOnClickListener {
-            // No action needed.
-        }
-
-        binding.navSell.setOnClickListener {
-            startActivity(Intent(this, SellActivity::class.java))
-        }
-
-        binding.navTrade.setOnClickListener {
-            startActivity(Intent(this, TradeActivity::class.java))
-        }
-        binding.navTrade.setOnClickListener {
-            startActivity(Intent(this, TradeActivity::class.java))
-        }
-
-    }
-
-    // ---------------------------------------------------------
-    // LISTING CLICK HANDLER
-    // ---------------------------------------------------------
-
-    private fun openMarketListing(listing: Listing) {
-        toast("You selected ${listing.title} in Market")
-    }
-
-    private fun toast(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-    }
 }

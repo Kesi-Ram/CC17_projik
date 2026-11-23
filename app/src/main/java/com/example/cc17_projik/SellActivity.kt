@@ -4,135 +4,126 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
+import androidx.core.content.edit
+import com.example.cc17_projik.databinding.ActivitySellBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.textfield.MaterialAutoCompleteTextView
-
+import org.json.JSONObject
 
 class SellActivity : AppCompatActivity() {
-
-    private val categories = listOf("Phones", "Laptops", "Tablets", "Accessories", "Other")
+    private lateinit var binding: ActivitySellBinding
+    private val store by lazy { LocalStore.get(this) }
+    private val drafts by lazy { getSharedPreferences("listing_drafts", MODE_PRIVATE) }
+    private var photoUri: String? = null
+    private var published = false
+    private val photoPicker = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if (uri != null) runCatching {
+            contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            photoUri = uri.toString()
+            binding.imgPhotoPreview.showItemPhoto(photoUri)
+        }.onFailure { showError(it) }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (savedInstanceState?.getBoolean("published") == true) { finish(); return }
         enableEdgeToEdge()
-        setContentView(R.layout.activity_sell)
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
-            insets
-        }
-
-        findViewById<MaterialAutoCompleteTextView>(R.id.actvCategory).setAdapter(
-            ArrayAdapter(this, android.R.layout.simple_list_item_1, categories)
-        )
-
-        findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
-        findViewById<MaterialButton>(R.id.btnCancel).setOnClickListener { finish() }
-
-        findViewById<MaterialButton>(R.id.btnPublish).setOnClickListener {
-            publishListing()
-        }
-
-        findViewById<MaterialButton>(R.id.btnDraft).setOnClickListener {
-            // TODO: save draft
-        }
-
-        findViewById<View>(R.id.btnAddPhotos).setOnClickListener {
-            // TODO: launch photo picker
-        }
+        binding = ActivitySellBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        applySystemInsets()
+        binding.actvCategory.setAdapter(ArrayAdapter(this, android.R.layout.simple_list_item_1,
+            Category.entries.map { it.label }))
+        binding.btnBack.setOnClickListener { finish() }
+        binding.btnCancel.setOnClickListener { finish() }
+        binding.btnPublish.setOnClickListener { publishListing() }
+        binding.btnAddPhotos.setOnClickListener { photoPicker.launch(arrayOf("image/*")) }
+        binding.btnDraft.setOnClickListener { saveDraft() }
+        if (savedInstanceState == null) restoreDraft()
+        else photoUri = savedInstanceState.getString("photo_uri")
+        binding.imgPhotoPreview.showItemPhoto(photoUri)
     }
 
-    // Validates the form, saves the listing, then shows the "posted" dialog.
+    private fun selectedCondition(): Condition? = when (binding.chipGroupCondition.checkedChipId) {
+        R.id.conditionNew -> Condition.NEW
+        R.id.conditionGood -> Condition.GOOD
+        R.id.conditionUsed -> Condition.USED
+        R.id.conditionRepair -> Condition.NEEDS_REPAIR
+        else -> null
+    }
+
     private fun publishListing() {
-        // NOTE: change etTitle / etPrice if your layout uses different IDs.
-        val title = findViewById<EditText>(R.id.etTitle).text.toString().trim()
-        val priceText = findViewById<EditText>(R.id.etPrice).text.toString().trim()
-        val categoryText = findViewById<MaterialAutoCompleteTextView>(R.id.actvCategory)
-            .text.toString().trim()
-        val checkedId = findViewById<ChipGroup>(R.id.chipGroupCondition).checkedChipId
-
-        if (title.isEmpty()) {
-            toast("Please enter a title")
-            return
+        if (published) return
+        val title = binding.etTitle.text.toString().trim()
+        val price = binding.etPrice.text.toString().toIntOrNull()
+        val description = binding.etNotes.text.toString().trim()
+        val category = Category.entries.find { it.label == binding.actvCategory.text.toString() }
+        val condition = selectedCondition()
+        when {
+            title.isBlank() -> binding.etTitle.error = getString(R.string.title_required)
+            price == null || price <= 0 -> binding.etPrice.error = getString(R.string.price_required)
+            description.isBlank() -> binding.etNotes.error = getString(R.string.description_required)
+            category == null -> binding.actvCategory.error = getString(R.string.category_required)
+            condition == null -> Toast.makeText(this, R.string.condition_required, Toast.LENGTH_SHORT).show()
+            else -> runCatching {
+                store.addListing(Listing(id = 0, title = title, price = price, condition = condition,
+                    category = category, description = description, location = binding.etLocation.text.toString().trim(),
+                    imageUri = photoUri))
+            }.onSuccess {
+                published = true
+                binding.btnPublish.isEnabled = false
+                drafts.edit { remove(store.profileId) }
+                MaterialAlertDialogBuilder(this).setTitle(R.string.item_posted)
+                    .setMessage(R.string.item_posted_message).setCancelable(false)
+                    .setPositiveButton(R.string.view_market) { _, _ ->
+                        startActivity(Intent(this, MarketActivity::class.java)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP))
+                        finish()
+                    }.setNegativeButton(android.R.string.ok) { _, _ -> finish() }.show()
+            }.onFailure { showError(it) }
         }
-
-        val price = priceText.toIntOrNull()
-        if (price == null || price <= 0) {
-            toast("Please enter a valid price")
-            return
-        }
-
-        if (categoryText.isEmpty()) {
-            toast("Please choose a category")
-            return
-        }
-
-        if (checkedId == View.NO_ID) {
-            toast("Please select the condition")
-            return
-        }
-
-        val conditionText = findViewById<Chip>(checkedId).text.toString()
-
-        val newId = (allListings.maxOfOrNull { it.id } ?: 0) + 1
-        allListings.add(
-            0, // index 0 = newest item shows first
-            Listing(
-                id = newId,
-                title = title,
-                price = price,
-                condition = toCondition(conditionText),
-                category = toCategory(categoryText),
-                imageRes = R.drawable.ic_home
-            )
-        )
-
-        showPostedDialog()
     }
 
-    // Converts the selected chip text into a Condition enum value.
-    private fun toCondition(text: String): Condition = when {
-        text.contains("new", ignoreCase = true) -> Condition.NEW
-        text.contains("good", ignoreCase = true) -> Condition.GOOD
-        else -> Condition.USED
+    private fun saveDraft() {
+        val value = JSONObject().apply {
+            put("title", binding.etTitle.text.toString())
+            put("price", binding.etPrice.text.toString())
+            put("description", binding.etNotes.text.toString())
+            put("location", binding.etLocation.text.toString())
+            put("category", binding.actvCategory.text.toString())
+            put("condition", selectedCondition()?.name.orEmpty())
+            put("photo", photoUri.orEmpty())
+        }
+        if (drafts.commitChanges { putString(store.profileId, value.toString()) }) {
+            Toast.makeText(this, R.string.draft_saved, Toast.LENGTH_SHORT).show()
+        } else showError(IllegalStateException(getString(R.string.save_failed)))
     }
 
-    // Converts the dropdown text into a Category enum value.
-    // Anything without a matching category (like "Tablets") becomes Others.
-    private fun toCategory(text: String): Category =
-        Category.values().firstOrNull { it.label.equals(text, ignoreCase = true) }
-            ?: Category.OTHERS
-
-    // Shows a confirmation dialog after the item is posted.
-    private fun showPostedDialog() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle("Item posted!")
-            .setMessage("Your item has been posted to the marketplace.")
-            .setCancelable(false)
-            .setPositiveButton("OK") { dialog, _ ->
-                dialog.dismiss()
-                finish() // back to the previous screen
-            }
-            .setNegativeButton("View Market") { dialog, _ ->
-                dialog.dismiss()
-                val intent = Intent(this, MarketActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                startActivity(intent)
-                finish()
-            }
-            .show()
+    private fun restoreDraft() {
+        val raw = drafts.getString(store.profileId, null) ?: return
+        runCatching {
+            val value = JSONObject(raw)
+            binding.etTitle.setText(value.optString("title"))
+            binding.etPrice.setText(value.optString("price"))
+            binding.etNotes.setText(value.optString("description"))
+            binding.etLocation.setText(value.optString("location"))
+            binding.actvCategory.setText(value.optString("category"), false)
+            binding.chipGroupCondition.check(when (value.optString("condition")) {
+                Condition.NEW.name -> R.id.conditionNew
+                Condition.GOOD.name -> R.id.conditionGood
+                Condition.USED.name -> R.id.conditionUsed
+                Condition.NEEDS_REPAIR.name -> R.id.conditionRepair
+                else -> View.NO_ID
+            })
+            photoUri = value.optString("photo").takeIf { it.isNotBlank() }
+        }.onFailure { showError(it) }
     }
 
-    private fun toast(message: String) =
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean("published", published)
+        outState.putString("photo_uri", photoUri)
+        super.onSaveInstanceState(outState)
+    }
 }

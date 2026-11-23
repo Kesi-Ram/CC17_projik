@@ -3,17 +3,18 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="@string/home" />
     <item
         android:id="@+id/nav_market"
         android:icon="@drawable/ic_market"
-        android:title="Market" />
+        android:title="@string/market" />
     <item
         android:id="@+id/nav_sell"
         android:icon="@drawable/ic_sell"
-        android:title="Sell" />
+        android:title="@string/sell" />
     <item
         android:id="@+id/nav_trade"
         android:icon="@drawable/ic_trade"
-        android:title="Trade" />
+        android:title="@string/trade" />
+    <item android:id="@+id/nav_maps" android:icon="@drawable/ic_location" android:title="@string/maps" />
 </menu>

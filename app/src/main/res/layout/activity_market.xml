@@ -7,14 +7,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MarketActivity">
-
     <!-- ===== MAIN CONTENT ===== -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/mint_bg">
-
         <!-- Header: menu, search, bell -->
         <LinearLayout
             android:id="@+id/header"
@@ -26,44 +24,41 @@
             android:paddingTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
+            app:layout_constraintTop_toTopOf="parent"
+            android:baselineAligned="false">
             <ImageButton
                 android:id="@+id/btnMenu"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Menu"
+                android:contentDescription="@string/ui_menu"
                 android:src="@drawable/ic_menu" />
-
             <EditText
                 android:id="@+id/etSearch"
+                android:importantForAutofill="no"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
                 android:layout_marginStart="12dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_search"
-                android:hint="Search product"
+                android:hint="@string/ui_search_product"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:paddingHorizontal="24dp"
                 android:textColor="@color/ink"
                 android:textColorHint="@color/gray_text"
                 android:textSize="18sp" />
-
             <FrameLayout
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="8dp">
-
                 <ImageView
                     android:id="@+id/btnBell"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:layout_gravity="center"
-                    android:contentDescription="Notifications"
+                    android:contentDescription="@string/ui_notifications"
                     android:src="@drawable/ic_bell" />
-
                 <TextView
                     android:id="@+id/tvBellCount"
                     android:layout_width="18dp"
@@ -71,12 +66,11 @@
                     android:layout_gravity="top|end"
                     android:background="@drawable/bg_badge_count"
                     android:gravity="center"
-                    android:text="4"
+                    android:text="@string/ui_4"
                     android:textColor="@color/white"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
             </FrameLayout>
         </LinearLayout>
-
         <!-- Category chips -->
         <HorizontalScrollView
             android:id="@+id/chipScroll"
@@ -87,7 +81,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header">
-
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroup"
                 android:layout_width="wrap_content"
@@ -97,78 +90,70 @@
                 app:selectionRequired="true"
                 app:singleLine="true"
                 app:singleSelection="true">
-
                 <com.google.android.material.chip.Chip
                     android:id="@+id/Others"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:text="Others"
+                    android:text="@string/ui_others"
                     app:checkedIconVisible="false"
                     app:chipBackgroundColor="@color/toggle_bg"
                     app:chipStrokeColor="@color/card_stroke"
                     app:chipStrokeWidth="1dp" />
-
                 <com.google.android.material.chip.Chip
                     android:id="@+id/Phones"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Phones"
+                    android:text="@string/ui_phones"
                     app:checkedIconVisible="false"
                     app:chipBackgroundColor="@color/toggle_bg"
                     app:chipStrokeColor="@color/card_stroke"
                     app:chipStrokeWidth="1dp" />
-
                 <com.google.android.material.chip.Chip
                     android:id="@+id/PcParts"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PC parts"
+                    android:text="@string/ui_pc_parts"
                     app:checkedIconVisible="false"
                     app:chipBackgroundColor="@color/toggle_bg"
                     app:chipStrokeColor="@color/card_stroke"
                     app:chipStrokeWidth="1dp" />
-
                 <com.google.android.material.chip.Chip
                     android:id="@+id/Laptops"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Laptops"
+                    android:text="@string/ui_laptops"
                     app:checkedIconVisible="false"
                     app:chipBackgroundColor="@color/toggle_bg"
                     app:chipStrokeColor="@color/card_stroke"
                     app:chipStrokeWidth="1dp" />
-
                 <com.google.android.material.chip.Chip
                     android:id="@+id/Audio"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Audio"
+                    android:text="@string/ui_audio"
                     app:checkedIconVisible="false"
                     app:chipBackgroundColor="@color/toggle_bg"
                     app:chipStrokeColor="@color/card_stroke"
                     app:chipStrokeWidth="1dp" />
-
                 <com.google.android.material.chip.Chip
                     android:id="@+id/Accessories"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Accessories"
+                    android:text="@string/ui_accessories"
                     app:checkedIconVisible="false"
                     app:chipBackgroundColor="@color/toggle_bg"
                     app:chipStrokeColor="@color/card_stroke"
                     app:chipStrokeWidth="1dp" />
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
-
         <!-- Product grid -->
-
         <!-- Bottom nav (Market is the active tab) -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMarket"
@@ -187,134 +172,17 @@
             app:layout_constraintVertical_bias="1.0"
             app:spanCount="2"
             tools:listitem="@layout/item_listing" />
-
-        <LinearLayout
+        <include
             android:id="@+id/bottomNav"
+            layout="@layout/view_bottom_nav"
             android:layout_width="0dp"
             android:layout_height="72dp"
-            android:layout_marginStart="28dp"
-            android:layout_marginEnd="28dp"
+            android:layout_marginHorizontal="24dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_nav_pill"
-            android:elevation="8dp"
-            android:orientation="horizontal"
-            android:paddingHorizontal="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <LinearLayout
-                android:id="@+id/navHome"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/navHomeIcon"
-                    android:layout_width="64dp"
-                    android:layout_height="32dp"
-                    android:contentDescription="Home"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_home" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Home"
-                    android:textColor="@color/ink"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/navMarket"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/navMarketIcon"
-                    android:layout_width="64dp"
-                    android:layout_height="32dp"
-                    android:background="@drawable/bg_nav_active"
-                    android:contentDescription="Market"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_market" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Market"
-                    android:textColor="@color/ink"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/navSell"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/navSellIcon"
-                    android:layout_width="64dp"
-                    android:layout_height="32dp"
-                    android:contentDescription="Sell"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_sell" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Sell"
-                    android:textColor="@color/ink"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/navTrade"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/navTradeIcon"
-                    android:layout_width="64dp"
-                    android:layout_height="32dp"
-                    android:contentDescription="Trade"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_trade" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Trade"
-                    android:textColor="@color/ink"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </LinearLayout>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
     <!-- ===== DRAWER PANEL ===== -->
     <LinearLayout
         android:id="@+id/drawerPanel"
@@ -324,15 +192,14 @@
         android:background="@color/mint_bg"
         android:orientation="vertical"
         android:padding="24dp">
-
         <!-- Avatar + name -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
-
+            android:orientation="horizontal"
+            android:baselineAligned="false">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/drawerAvatar"
                 android:layout_width="64dp"
@@ -340,33 +207,29 @@
                 android:src="@drawable/ic_home"
                 app:civ_border_color="@color/white"
                 app:civ_border_width="2dp" />
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
-
                 <TextView
                     android:id="@+id/drawerName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="User"
+                    android:text="@string/ui_user"
                     android:textColor="@color/ink"
                     android:textSize="16sp"
                     android:textStyle="bold" />
-
                 <TextView
                     android:id="@+id/drawerBio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bio"
+                    android:text="@string/ui_bio"
                     android:textColor="@color/gray_text"
                     android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
-
         <!-- Chats / Saved / Profile shortcuts -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -374,9 +237,9 @@
             android:layout_marginTop="24dp"
             android:background="@color/white"
             android:orientation="horizontal"
-            android:padding="16dp">
-
-            <LinearLayout
+            android:padding="16dp"
+            android:baselineAligned="false">
+            <TextView
                 android:id="@+id/drawerChats"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -384,24 +247,13 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:contentDescription="Chats"
-                    android:src="@drawable/ic_chat" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Chats"
-                    android:textColor="@color/ink"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
+                android:text="@string/ui_chats"
+                android:textColor="@color/ink"
+                android:textSize="12sp"
+                app:drawableTopCompat="@drawable/ic_chat"
+                android:drawablePadding="4dp"
+                android:minHeight="56dp" />
+            <TextView
                 android:id="@+id/drawerSaved"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -409,24 +261,13 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:contentDescription="Saved"
-                    android:src="@drawable/ic_bookmark" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Saved items"
-                    android:textColor="@color/ink"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
+                android:text="@string/ui_saved_items"
+                android:textColor="@color/ink"
+                android:textSize="12sp"
+                app:drawableTopCompat="@drawable/ic_bookmark"
+                android:drawablePadding="4dp"
+                android:minHeight="56dp" />
+            <TextView
                 android:id="@+id/drawerProfile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -434,24 +275,13 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:contentDescription="Profile"
-                    android:src="@drawable/ic_person" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="View profile"
-                    android:textColor="@color/ink"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                android:text="@string/ui_view_profile"
+                android:textColor="@color/ink"
+                android:textSize="12sp"
+                app:drawableTopCompat="@drawable/ic_person"
+                android:drawablePadding="4dp"
+                android:minHeight="56dp" />
         </LinearLayout>
-
         <!-- Menu items -->
         <TextView
             android:id="@+id/drawerPrivacy"
@@ -459,65 +289,60 @@
             android:layout_height="48dp"
             android:layout_marginTop="16dp"
             android:clickable="true"
-            android:drawableEnd="@drawable/ic_privacy"
             android:drawablePadding="14dp"
             android:focusable="true"
             android:gravity="center_vertical"
-            android:text="Privacy&amp;Security"
+            android:text="@string/ui_privacy_security"
             android:textColor="@color/ink"
-            android:textSize="15sp" />
-
+            android:textSize="15sp"
+            app:drawableEndCompat="@drawable/ic_privacy" />
         <TextView
             android:id="@+id/drawerFaq"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:clickable="true"
-            android:drawableEnd="@drawable/ic_faq"
             android:drawablePadding="14dp"
             android:focusable="true"
             android:gravity="center_vertical"
-            android:text="FAQ"
+            android:text="@string/ui_faq"
             android:textColor="@color/ink"
-            android:textSize="15sp" />
-
+            android:textSize="15sp"
+            app:drawableEndCompat="@drawable/ic_faq" />
         <TextView
             android:id="@+id/drawerAbout"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:clickable="true"
-            android:drawableEnd="@drawable/ic_info"
             android:drawablePadding="14dp"
             android:focusable="true"
             android:gravity="center_vertical"
-            android:text="About us"
+            android:text="@string/ui_about_us"
             android:textColor="@color/ink"
-            android:textSize="15sp" />
-
+            android:textSize="15sp"
+            app:drawableEndCompat="@drawable/ic_info" />
         <TextView
             android:id="@+id/drawerSettings"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:clickable="true"
-            android:drawableEnd="@drawable/ic_settings"
             android:drawablePadding="14dp"
             android:focusable="true"
             android:gravity="center_vertical"
-            android:text="Settings"
+            android:text="@string/ui_settings"
             android:textColor="@color/ink"
-            android:textSize="15sp" />
-
+            android:textSize="15sp"
+            app:drawableEndCompat="@drawable/ic_settings" />
         <TextView
             android:id="@+id/drawerLogout"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:clickable="true"
-            android:drawableEnd="@drawable/ic_logout"
             android:drawablePadding="14dp"
             android:focusable="true"
             android:gravity="center_vertical"
-            android:text="Log out"
+            android:text="@string/ui_log_out"
             android:textColor="@color/ink"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            app:drawableEndCompat="@drawable/ic_logout" />
     </LinearLayout>
-
 </androidx.drawerlayout.widget.DrawerLayout>

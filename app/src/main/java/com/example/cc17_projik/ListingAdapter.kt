@@ -23,8 +23,8 @@ class ListingAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         with(holder.binding) {
-            imgListing.setImageResource(item.imageRes)
-            tvPrice.text = "$${item.price}"
+            imgListing.showItemPhoto(item.imageUri, item.imageRes)
+            tvPrice.text = root.context.getString(R.string.price_value, item.price)
             tvTitle.text = item.title
             tvCondition.bindCondition(item.condition)
             root.setOnClickListener { onClick(item) }
